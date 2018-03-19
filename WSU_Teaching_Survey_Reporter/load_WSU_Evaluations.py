@@ -24,7 +24,7 @@ def load_evals(filename):
     for i, header in enumerate(list(df)):
         if "Question" not in header:
             list_of_headers.remove(header)
-    #print(list_of_headers)        
+    #print(list_of_headers)
 
     for name in facultynames:
         facultysevals = df.loc[df['InstructorName'] == name]
@@ -55,7 +55,8 @@ def load_evals(filename):
                 answers = answers.dropna()
                 if len(answers) > 0 and isinstance(answers.iloc[0],str):
                     # print(answers.dropna())
-                    cell_value = '  '.join(answers.dropna())                
+                    cell_value = '. '.join(answers.dropna())
+                    cell_value = cell_value.replace('..', '.')                
                 else:
                     if len(answers) > 0:
                         cell_value = np.mean(np.array(answers).T)
@@ -74,8 +75,8 @@ def load_evals(filename):
                 else:
                     #print(new_sheet_part)
                     new_sheet = new_sheet.append(new_sheet_part,ignore_index=True)
-    return new_sheet             
-           
+    return new_sheet
+
 
 '''def gui_fname(dir=None):
     """Select a file via a dialog and return the file name."""
@@ -97,12 +98,12 @@ def openfile_dialog():
 
 def load_all_evals(path = '/Users/jslater/Downloads/'):
     '''load all excel summaries of evaluations
-    
+
     Parameters
     ----------
     path : string
         path to directory containing all strings (must include end slash)
-    
+
     '''
     filenames = os.listdir(path)
     newlist = list([])
@@ -113,13 +114,13 @@ def load_all_evals(path = '/Users/jslater/Downloads/'):
             print('loading ', path + filename)
             db_new = load_evals(path + filename)
             print(db_new.shape)
-            
+
             if first is True:
                 combined = db_new
                 first = False
             else:
                 combined = append(combined, db_new)
-    
+
     writer = pd.ExcelWriter(path + 'Combined_Evaluations.xlsx')
     combined.to_excel(writer, 'Sheet1')
     writer.save()
