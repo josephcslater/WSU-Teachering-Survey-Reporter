@@ -113,6 +113,7 @@ def load_evals(filename):
                     cell_value = cell_value.replace('..', '.')
                     cell_value = cell_value.replace('. .', '.')
                     cell_value = '[' + survey_question + ']  ' + cell_value
+                    cell_value = cell_value.replace('..', '.')
                 else:
                     if len(answers) > 0:
                         cell_value = np.mean(np.array(answers).T)
