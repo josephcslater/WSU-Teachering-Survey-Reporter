@@ -15,6 +15,7 @@ def append(*args):
 
 
 def load_evals(filename):
+    print('Loading ' + filename)
     df = pd.read_excel(filename, sheet_name='RawData')
     term = (filename[filename.find('201'):filename.find('courses')][0:4] +
             " " +
